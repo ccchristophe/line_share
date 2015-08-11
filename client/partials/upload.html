@@ -1,0 +1,103 @@
+<!-- <div ng-include=" 'nav_bar.html' "></div> -->
+
+<div class='container'>
+	<div ng-controller='UploadsController'>
+		
+		<div class='row'>
+			<div id='upload_box' class='col-md-8 col-md-offset-2'>
+				<h1>Upload Note</h1>
+				<form name='uploadForm' novalidate>
+					<div class='row'>
+						<div class='col-md-10 col-md-offset-1'>
+							<h5>School</h5>
+						</div>
+						<input type=text class='col-md-10 col-md-offset-1' placeholder='Enter School Name' name='school' ng-model='add_upload.school' required>
+					</div>
+						<span style='color:red' ng-show='uploadForm.school.$dirty && uploadForm.school.$invalid'>
+							<span class='col-md-10 col-md-offset-1' ng-show='uploadForm.school.$error.required'>School is required</span>
+						</span>
+					
+					<div class='row'>
+						<div class='col-md-10 col-md-offset-1'>			
+							<h5>Course</h5>
+						</div>
+						<input type=text class='col-md-10 col-md-offset-1' placeholder='Enter Course Title' name='course' ng-model='add_upload.course' required>
+					</div>
+						<span style='color:red' ng-show='uploadForm.course.$dirty && uploadForm.course.$invalid'>
+							<span class='col-md-10 col-md-offset-1' ng-show='uploadForm.course.$error.required'>Course is required</span>
+						</span>
+
+					<div class='row'>
+						<div class='col-md-10 col-md-offset-1'>
+							<h5>Professor</h5>
+						</div>
+						<input type=text class='col-md-10 col-md-offset-1' placeholder='Enter Professor Name' name='professor' ng-model='add_upload.professor' required>
+					</div>
+						<span style='color:red' ng-show='uploadForm.professor.$dirty && uploadForm.professor.$invalid'>
+							<span class='col-md-10 col-md-offset-1' ng-show='uploadForm.professor.$error.required'>Professor is required</span>
+						</span>
+
+
+					<div class='row'>
+						<div class='col-md-10 col-md-offset-1'>
+							<h5>Textbook</h5>
+						</div>
+						<input type=text class='col-md-10 col-md-offset-1' placeholder='Enter Textbook' name='textbook' ng-model='add_upload.textbook' required>
+					</div>
+						<span style='color:red' ng-show='uploadForm.textbook.$dirty && uploadForm.textbook.$invalid'>
+							<span class='col-md-10 col-md-offset-1' ng-show='uploadForm.textbook.$error.required'>Textbook is required</span>
+						</span>
+
+					<div class='row'>
+						<div class='col-md-10 col-md-offset-1'>
+							<h5>Term</h5>
+						</div>
+						<div class='col-md-10 col-md-offset-1'>
+							<select class='selectpicker' ng-model='add_upload.term'>
+								<option>Fall</option>
+								<option>Winter</option>
+								<option>Spring</option>
+								<option>Summer</option>
+							</select>
+						</div>
+					</div>
+
+					<div class='row'>
+						<div class='col-md-10 col-md-offset-1'>
+							<h5>Year</h5>
+						</div>
+						<input type=text class='col-md-10 col-md-offset-1' placeholder='Enter Year' name='year' ng-model='add_upload.year' required>
+					</div>
+						<span style='color:red' ng-show='uploadForm.year.$dirty && uploadForm.year.$invalid'>
+							<span class='col-md-10 col-md-offset-1' ng-show='uploadForm.year.$error.required'>Year is required</span>
+						</span>
+					<br>
+					<div class='row'>
+
+						<div ng-app="fileUpload" ng-controller="MyCtrl" class='col-md-10 col-md-offset-1'>
+							<h5>Files:</h5>
+							<ul>
+								<li ng-repeat="f in files" style="font:smaller">{{f.name}}</li>
+							</ul>
+							<div 
+								ngf-drop ngf-select ng-model="files" class="drop-box" 
+								ngf-drag-over-class="dragover"
+								ngf-multiple="true" 
+								ngf-allow-dir="true"
+								accept="image/*,application/pdf">Drop or click to upload file
+							</div>
+							<div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+							Upload Log:
+							<pre>{{log}}</pre>
+						</div>
+						
+						<div class='col-md-10 col-md-offset-1'>
+							<br>
+							<input type='submit' value='Upload' class='btn btn-success ' ng-click='addUpload()' ng-disabled='uploadForm.$invalid || uploadForm.school.$dirty && uploadForm.school.$invalid || uploadForm.course.$dirty && uploadForm.course.$invalid || uploadForm.professor.$dirty && uploadForm.professor.$invalid || uploadForm.textbook.$dirty && uploadForm.textbook.$invalid || uploadForm.year.$dirty && uploadForm.year.$invalid'>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

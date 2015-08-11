@@ -1,0 +1,33 @@
+<!-- <div ng-controller='UsersController'> -->
+	<div class='row'>
+		<div class='col-sm-4 col-sm-offset-4'>
+			<h1><i class="fa fa-files-o"></i> Login</h1>
+			<form name='loginForm' novalidate>
+
+					<h5>Email</h5>
+					<input type=email name='email' class='col-sm-12' placeholder='Email' ng-model='user.email' required>
+					<span style='color:red' ng-show='loginForm.email.$dirty && loginForm.email.$invalid'>
+						<span ng-show='loginForm.email.$error.required'>Email is required</span>
+						<span ng-show='loginForm.email.$error.email'>Invalid email address</span>
+					</span>
+
+					<h5>Password</h5>
+					<input type=password name='password' class='col-sm-12' placeholder='Password' ng-model='user.password' required>
+					<span style='color:red' ng-show='loginForm.password.$dirty && loginForm.password.$invalid'>
+						<span ng-show='loginForm.password.$error.required'>Password is required</span>
+					</span>		
+
+				<br><br>
+
+					<input type='submit' value='Login' class='btn btn-primary col-sm-3 col-sm-offset-9' ng-click='loginUser(user)' ng-disabled='loginForm.$invalid || loginForm.email.$dirty && loginForm.email.$invalid || loginForm.password.$dirty && loginForm.password.$invalid'>
+
+			</form>
+			<p><span style='color:red'>{{wrong.error}}</span></p>
+			<br>
+			<div class='row'>
+				<p class='col-sm-8 col-sm-offset-4'>Don't have an account? <a href="#/register">Sign up</a>!</p>
+			</div>
+		</div>
+	</div>
+
+<!-- </div -->

@@ -1,0 +1,24 @@
+<!-- <div ng-include=" 'nav_bar.html' "></div> -->
+<div class='container'>
+	<div ng-controller='UploadsController'>
+
+		<h1>Notes</h1>
+		<p>Search <input type='text' ng-model='upload_school'></p>
+		<div id='notes_display' ng-repeat='upload in uploads | filter:upload_school'>
+			<hr>
+			<div class="row col-md-12 col-md-offset-0">
+				<p class='col-md-3'><b>School:</b> <span ng-bind='upload.school'></span></p>
+				<p class='col-md-2'><b>Course:</b> <span ng-bind='upload.course'></span></p>
+				<p class='col-md-2'><b>Professor:</b> <span ng-bind='upload.professor'></span></p>
+				<p class='col-md-3'><b>Textbook:</b> <span ng-bind='upload.textbook'></span></p>
+				<p class='col-md-2'><b>Term:</b> <span ng-bind='upload.term +" "+ upload.year'></span></p>
+			</div>
+			<div class='row'>
+				<div class='col-md-11 col-md-offset-1'>
+					<p><button type='button' class='btn btn-default'>Download</button> Uploaded by: {{upload.username}}</p>
+				</div>
+			</div>
+			<hr>
+		</div>
+	</div>
+</div>

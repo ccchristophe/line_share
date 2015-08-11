@@ -1,0 +1,49 @@
+<div >
+	
+	<div class='row'>
+		<div class='col-sm-4 col-sm-offset-4'>
+			<h1><i class="fa fa-files-o"></i> Sign up</h1>
+			<form name='myForm' novalidate>
+		
+					<h5>Email</h5>
+					<input type=email class='col-sm-12' placeholder='Enter Email' name='email' ng-model='add_user.email' required>
+					<span style='color:red' ng-show='myForm.email.$dirty && myForm.email.$invalid'>
+						<span ng-show='myForm.email.$error.required'>Email is required</span>
+						<span ng-show='myForm.email.$error.email'>Invalid email address</span>
+					</span>
+
+
+
+					<h5>Username</h5>
+					<input type=text class='col-sm-12' placeholder='Enter Username' name='username' ng-model='add_user.username' required>
+					<span style='color:red' ng-show='myForm.username.$dirty && myForm.username.$invalid'>
+						<span ng-show='myForm.username.$error.required'>Username is required</span>
+					</span>
+
+
+
+					<h5>Password</h5>
+					<input type=password class='col-sm-12' placeholder='Enter Password' name='password' ng-model='add_user.password' required>
+					<span style='color:red' ng-show='myForm.password.$dirty && myForm.password.$invalid'>
+						<span ng-show='myForm.password.$error.required'>Password is required</span>
+					</span>
+
+					<h5>Confirm Password</h5>
+					<input type=password class='col-sm-12' placeholder='Confirm Password' name='confirm_password' ng-model='confirm_password'  password-match="add_user.password" required>
+					<span style='color:red' ng-show='myForm.confirm_password.$dirty && myForm.confirm_password.$invalid'>
+						<span ng-show='myForm.confirm_password.$error.required'>Confirm Password is required</span>
+						<span ng-show='!password-match'>Passwords must match</span>
+					</span>
+
+				<br><br>
+				<input type='submit' value='Sign up' class='btn btn-primary col-sm-3 col-sm-offset-9' ng-click='addUser(add_user)' ng-disabled='myForm.$invalid || myForm.email.$dirty && myForm.email.$invalid || myForm.username.$dirty && myForm.username.$invalid || myForm.password.$dirty && myForm.password.$invalid || myForm.confirm_password.$dirty && myForm.confirm_password.$invalid || password-match'>
+				
+			</form>
+			<br>
+			<div class='row'>
+				<p class='col-sm-8 col-sm-offset-4'>Already have an account? <a href="#/login">Login</a>!</p>
+			</div>
+		</div>
+	</div>
+
+</div>

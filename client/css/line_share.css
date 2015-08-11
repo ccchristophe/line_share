@@ -1,0 +1,44 @@
+body {
+	background: #F5F5F5;
+}
+#notes_display {
+	background: white;
+	box-shadow: 9px 9px 9px rgba(0,0,0,0.2);
+	border-radius: 5px;
+}
+
+#upload_box {
+	background: white;
+	box-shadow: 9px 9px 9px rgba(0,0,0,0.2);
+	border-radius: 5px;
+	margin-top: 40px;
+}
+
+.ng-enter{
+	transition:1s;
+	opacity:0;
+}
+.ng-enter-active{
+	opacity:1;
+}
+.ng-leave{
+	transition:0s;
+	opacity:1;
+}
+.ng-leave-active{
+	opacity:0;
+}
+
+
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 200px;
+    height: 65px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
+.dragover {
+    border: 5px dashed black;
+}
