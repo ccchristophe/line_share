@@ -201,29 +201,123 @@ share_line.controller("UploadsController", function ($scope, UploadFactory, User
 
 share_line.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {
     $scope.$watch('files', function () {
-        $scope.upload($scope.files);
+    	if($scope.files){
+			$scope.upload($scope.files);
+		}
     });
     $scope.log = '';
 
-    $scope.upload = function (files) {
-        if (files && files.length) {
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                Upload.upload({
-                    url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-                    fields: {
-                        'username': $scope.username
-                    },
-                    file: file
-                }).progress(function (evt) {
-                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                    $scope.log = 'progress: ' + progressPercentage + '% ' + evt.config.file.name + '\n' + $scope.log;
-                }).success(function (data, status, headers, config) {
-                    $timeout(function () {
-                        $scope.log = 'file: ' + config.file.name + ', Response: ' + JSON.stringify(data) + '\n' + $scope.log;
-                    });
-                });
-            }
-        }
-    };
+    $scope.policy = {
+	    "Version": "2012-10-17",
+	    "Statement": [
+	        {
+	            "Sid": "Stmt1439503701000",
+	            "Effect": "Allow",
+	            "Action": [
+	                "s3:PutObject"
+	            ],
+	            "Resource": [
+	                "arn:aws:s3:::shareline"
+	            ]
+	        }
+	    ]
+	}
+
+
+	$scope.creds = {
+	  bucket: 'shareline',
+	  access_key: 'AKIAIJ7RES4RKFIU22QA',
+	  secret_key: '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'
+	}
+	 
+	$scope.upload = function(files) {
+		'use strict';
+
+		$scope.file = files[0];
+		  // Configure The S3 Object 
+		  AWS.config.update({ accessKeyId: $scope.creds.access_key, secretAccessKey: $scope.creds.secret_key });
+		  // AWS.config.region = 'us-west-1';
+		  var bucket = new AWS.S3({ params: { Bucket: $scope.creds.bucket } });
+		 
+		  if($scope.file) {
+		    var params = { Key: $scope.file.name, ContentType: $scope.file.type, Body: $scope.file, ServerSideEncryption: 'AES256' };
+
+		    // bucket.getObject({ Key: $scope.file.name, Bucket: $scope.creds.bucket}, function(err, data) {
+		    //   if(err) {
+		    //     // There Was An Error With Your S3 Config
+		    //     alert(err);
+		    //     console.log(err);
+		    //     return false;
+		    //   }
+		    //   else {
+		    //     // Success!
+		    //     console.log(data);
+		    //     alert('download Done');
+		    //   }
+		    // });
+		 
+		    bucket.putObject(params, function(err, data) {
+		      if(err) {
+		        // There Was An Error With Your S3 Config
+		        alert(err);
+		        return false;
+		      }
+		      else {
+		        // Success!
+		        console.log(data);
+		        alert('Upload Done');
+		      }
+		    })
+		    .on('httpUploadProgress',function(progress) {
+		          // Log Progress Information
+		          console.log(Math.round(progress.loaded / progress.total * 100) + '% done');
+		        });
+		  }
+		  else {
+		    // No File Selected
+		    alert('No File Selected');
+		  }
+		}
+
+    // $scope.upload = function (files) {
+    //     if (files && files.length) {
+    //         for (var i = 0; i < files.length; i++) {
+    //             var file = files[i];
+
+
+
+	   //          Upload.upload({
+				// 	url: 'https://shareline.s3-website-us-west-1.amazonaws.com', //S3 upload url including bucket name
+				// 	method: 'POST',
+				// 	fields : {
+				// 		key: file.name, // the key to store the file on S3, could be file name or customized
+				// 		AWSAccessKeyId: 'AKIAIJ7RES4RKFIU22QA', 
+				// 		acl: 'private', // sets the access to the uploaded file in the bucket: private or public 
+				// 		policy: $scope.policy, // base64-encoded json policy (see article below)
+				// 		signature: $scope.signature, // base64-encoded signature based on policy string (see article below)
+				// 		"Content-Type": file.type != '' ? file.type : 'application/octet-stream', // content type of the file (NotEmpty)
+				// 		filename: file.name // this is needed for Flash polyfill IE8-9
+				// 	},
+				// 	file: file,
+				// });
+
+                // Upload.upload({
+                //     url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+                //     fields: {
+                //         'username': $scope.username
+                //     },
+                //     file: file
+                // }).progress(function (evt) {
+                //     var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                //     $scope.log = 'progress: ' + progressPercentage + '% ' + evt.config.file.name + '\n' + $scope.log;
+                // }).success(function (data, status, headers, config) {
+                //     $timeout(function () {
+                //         $scope.log = 'file: ' + config.file.name + ', Response: ' + JSON.stringify(data) + '\n' + $scope.log;
+                //     });
+                // });
+
+// 			console.log(file);
+//             }
+//         }
+//     };
 }]);
