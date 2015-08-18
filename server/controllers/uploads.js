@@ -14,7 +14,7 @@ module.exports = (function(){
 			})
 		},
 		add: function(req, res){
-			var add_upload = new Upload({school : req.body.school, course : req.body.course, professor : req.body.professor, textbook : req.body.textbook, term : req.body.term, year : req.body.year, username : req.body.username})
+			var add_upload = new Upload({school : req.body.school, course : req.body.course, professor : req.body.professor, textbook : req.body.textbook, term : req.body.term, year : req.body.year, username : req.body.username, file : req.body.file})
 			add_upload.save(function(err, response){
 				if(err){
 					console.log(err);

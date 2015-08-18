@@ -7,7 +7,9 @@ var UploadSchema = new mongoose.Schema({
 	textbook : String,
 	term : String,
 	year : Number,
-	username: String
+	username: String,
+	file: {type : String, default: "abc"}
 });
 
 mongoose.model('Upload', UploadSchema);
+
