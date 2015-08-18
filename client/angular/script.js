@@ -226,8 +226,8 @@ share_line.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scop
 
 	$scope.creds = {
 	  bucket: 'shareline',
-	  access_key: 'AKIAIJ7RES4RKFIU22QA',
-	  secret_key: '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'
+	  access_key: '',
+	  secret_key: ''
 	}
 	 
 	$scope.upload = function(files) {
@@ -291,7 +291,7 @@ share_line.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scop
 				// 	method: 'POST',
 				// 	fields : {
 				// 		key: file.name, // the key to store the file on S3, could be file name or customized
-				// 		AWSAccessKeyId: 'AKIAIJ7RES4RKFIU22QA', 
+				// 		AWSAccessKeyId: '', 
 				// 		acl: 'private', // sets the access to the uploaded file in the bucket: private or public 
 				// 		policy: $scope.policy, // base64-encoded json policy (see article below)
 				// 		signature: $scope.signature, // base64-encoded signature based on policy string (see article below)
