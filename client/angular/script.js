@@ -199,16 +199,16 @@ share_line.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scop
     $scope.log = '';
 
     $scope.policy = {
-	    "Version": "",
+	    "Version": "2012-10-17",
 	    "Statement": [
 	        {
-	            "Sid": "",
+	            "Sid": "Stmt1439503701000",
 	            "Effect": "Allow",
 	            "Action": [
 	                "s3:PutObject"
 	            ],
 	            "Resource": [
-	                "arn:aws:s3:::"
+	                "arn:aws:s3:::shareline"
 	            ]
 	        }
 	    ]
@@ -230,7 +230,7 @@ share_line.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scop
 		  var bucket = new AWS.S3({ params: { Bucket: $scope.creds.bucket } });
 		 
 		  if($scope.file) {
-		    var params = { Key: $scope.file.name, ContentType: $scope.file.type, Body: $scope.file, ServerSideEncryption: '' };
+		    var params = { Key: $scope.file.name, ContentType: $scope.file.type, Body: $scope.file, ServerSideEncryption: 'AES256' };
 		 
 		    bucket.putObject(params, function(err, data) {
 		      if(err) {
