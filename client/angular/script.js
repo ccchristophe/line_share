@@ -259,4 +259,3 @@ share_line.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scop
 		  }
 		}
 }]);
-
