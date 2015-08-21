@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var process = require('process');
 
 module.exports = (function(){
 	return{
@@ -32,8 +33,11 @@ module.exports = (function(){
 				else{
 					if(response.length > 0){
 						if(req.body.password == response[0].password && req.body.email == response[0].email){
-							console.log(response);
-							res.json(response);
+							console.log("Ooooooooooooo");
+							// response[0].s3 = process.env.S3;
+							// response[0].secret = process.env.SECRET;
+							console.log(response[0]);
+							res.json({response: response, s3:process.env.S3, secret:process.env.SECRET});
 						}
 						else{
 							res.json({message : "wrong"});

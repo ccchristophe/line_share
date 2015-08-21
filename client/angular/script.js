@@ -37,6 +37,7 @@ share_line.config(function ($animateProvider){
 share_line.factory("UserFactory", function($http){
 	var factory = {};
 	var users = [];
+	var keys = {};
 	var loggedIn;
 	// view
 
@@ -60,7 +61,14 @@ share_line.factory("UserFactory", function($http){
 				callback("losing")
 			}
 			else{
-				currentUser = output;
+				console.log("TESTING");
+				currentUser = output.response;
+				console.log(output);
+				keys = {
+					's3': output.s3,
+					'secret': output.secret
+				}
+				factory.keys = keys;
 				callback(output);
 			}
 		});
@@ -183,7 +191,7 @@ share_line.controller("UploadsController", function ($scope, UploadFactory, User
 	
 })
 
-share_line.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {
+share_line.controller('MyCtrl', ['$scope', 'Upload', '$timeout', 'UserFactory', function ($scope, Upload, $timeout, UserFactory) {
 	$scope.fileUploaded = false;
 	$scope.progressBarPercentage = { percentage: 0 };
 
@@ -202,23 +210,27 @@ share_line.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scop
 	    "Version": "2012-10-17",
 	    "Statement": [
 	        {
-	            "Sid": "",
+	            "Sid": "Stmt1439503701000",
 	            "Effect": "Allow",
 	            "Action": [
 	                "s3:PutObject"
 	            ],
 	            "Resource": [
-	                "arn:aws:s3:::"
+	                "arn:aws:s3:::shareline"
 	            ]
 	        }
 	    ]
+	};
+
+	var test = UserFactory;
+	console.log(test); 
+	$scope.creds = {
+	  bucket: 'shareline',
+	  access_key: UserFactory.keys.s3,
+	  secret_key: UserFactory.keys.secret
 	}
 
-	$scope.creds = {
-	  bucket: '',
-	  access_key: '',
-	  secret_key: ''
-	}
+	console.log($scope.creds);
 	 
 	$scope.upload = function(files) {
 		'use strict';
@@ -230,7 +242,7 @@ share_line.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scop
 		  var bucket = new AWS.S3({ params: { Bucket: $scope.creds.bucket } });
 		 
 		  if($scope.file) {
-		    var params = { Key: $scope.file.name, ContentType: $scope.file.type, Body: $scope.file, ServerSideEncryption: '' };
+		    var params = { Key: $scope.file.name, ContentType: $scope.file.type, Body: $scope.file, ServerSideEncryption: 'AES256' };
 		 
 		    bucket.putObject(params, function(err, data) {
 		      if(err) {
